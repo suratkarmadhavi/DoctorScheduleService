@@ -4,7 +4,7 @@ FROM openjdk:17-jdk-slim
 
  
 
-COPY target/DoctorSchedule.jar app1.jar
+COPY target/doctorscheduleservice.jar app1.jar
 
  
 
