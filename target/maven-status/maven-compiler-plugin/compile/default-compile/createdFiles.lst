@@ -1,0 +1,10 @@
+com\oneHealth\DoctorSchedule\OneHealthDoctorScheduleServicesApplication.class
+com\oneHealth\DoctorSchedule\repository\DoctorScheduleRepository.class
+com\oneHealth\DoctorSchedule\service\DoctorScheduleService.class
+com\oneHealth\DoctorSchedule\serviceImplementation\DoctorScheduleServiceImpl.class
+com\oneHealth\DoctorSchedule\exception\GlobalExceptionHandler.class
+com\oneHealth\DoctorSchedule\entity\DoctorSchedule.class
+com\oneHealth\DoctorSchedule\controller\DoctorScheduleController.class
+com\oneHealth\DoctorSchedule\exception\DatabaseException.class
+com\oneHealth\DoctorSchedule\exception\ScheduleNotFoundException.class
+com\oneHealth\DoctorSchedule\DTO\ErrorMessageDTO.class
