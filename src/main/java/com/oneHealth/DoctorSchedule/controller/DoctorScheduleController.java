@@ -43,10 +43,16 @@ public class DoctorScheduleController {
 
     // Endpoint to save the doctor's schedule information into the database.
     @PostMapping("/saveSchedule")
-    public ResponseEntity<String> saveDoctorSchedule(@RequestBody DoctorSchedule schedule) throws DatabaseException, InstanceAlreadyExistsException {
-        String s = service.saveDoctorSchedule(schedule);
-        logger.info("In Controller - Doctor Schedule Saved Successfully: " + schedule);
-        return new ResponseEntity<>(s, HttpStatus.CREATED);
+    public ResponseEntity<String> saveDoctorSchedule(@RequestBody DoctorSchedule schedule) throws DatabaseException {
+        String s;
+		try {
+				s = service.saveDoctorSchedule(schedule);
+				logger.info("In Controller - Doctor Schedule Saved Successfully: " + schedule);
+				return new ResponseEntity<>(s, HttpStatus.CREATED);
+			} catch (InstanceAlreadyExistsException e) {
+				return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+        
     }
 
     // Endpoint to retrieve the doctor's schedule information by doctorId from the database.
