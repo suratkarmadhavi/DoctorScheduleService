@@ -51,9 +51,9 @@ public class DoctorScheduleServiceImpl implements DoctorScheduleService {
 
     // Method to retrieve DoctorSchedule by its ID and handle ScheduleNotFoundException if the schedule for the given doctorId is not found.
     @Override
-    public DoctorSchedule getDoctorScheduleById(Long doctorId) throws ScheduleNotFoundException {
-        DoctorSchedule schedule = repo.findById(doctorId)
-                .orElseThrow(() -> new ScheduleNotFoundException("No Schedule with this ID: " + doctorId));
+    public DoctorSchedule getDoctorScheduleById(Long slotId) throws ScheduleNotFoundException {
+        DoctorSchedule schedule = repo.findById(slotId)
+                .orElseThrow(() -> new ScheduleNotFoundException("No Schedule with this ID: " + slotId));
         logger.info("In Service - Doctor Schedule Retrieved: " + schedule);
         return schedule;
     }
@@ -73,7 +73,7 @@ public class DoctorScheduleServiceImpl implements DoctorScheduleService {
                 .orElseThrow(() -> new ScheduleNotFoundException("No Doctor Schedule Found with this ID: " + slotId));
 
         // Update the fields of the existing DoctorSchedule with the new values
-        details.setDoctorId(doctorSchedule.getDoctorId());
+        //details.setDoctorId(doctorSchedule.getDoctorId());
         details.setStartTime(doctorSchedule.getStartTime());
         details.setEndTime(doctorSchedule.getEndTime());
         details.setDate(doctorSchedule.getDate());
@@ -89,12 +89,12 @@ public class DoctorScheduleServiceImpl implements DoctorScheduleService {
 
     // Method to delete DoctorSchedule by its ID and handle ScheduleNotFoundException if the schedule for the given doctorId is not found.
     @Override
-    public DoctorSchedule deleteScheduleByID(long doctorId) throws ScheduleNotFoundException {
-        DoctorSchedule doctorSchedule = repo.findById(doctorId)
-                .orElseThrow(() -> new ScheduleNotFoundException("No Doctor Schedule found with this ID: " + doctorId));
+    public DoctorSchedule deleteScheduleByID(long slotId) throws ScheduleNotFoundException {
+        DoctorSchedule doctorSchedule = repo.findById(slotId)
+                .orElseThrow(() -> new ScheduleNotFoundException("No Doctor Schedule found with this ID: " + slotId));
 
         repo.delete(doctorSchedule);
-        logger.info("In Service - Doctor Schedule Deleted Successfully with ID: " + doctorId);
+        logger.info("In Service - Doctor Schedule Deleted Successfully with ID: " + slotId);
         return doctorSchedule;
     }
 

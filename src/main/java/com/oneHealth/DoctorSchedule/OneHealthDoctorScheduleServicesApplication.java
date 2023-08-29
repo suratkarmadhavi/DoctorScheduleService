@@ -27,7 +27,7 @@ public class OneHealthDoctorScheduleServicesApplication {
     @GetMapping
 	public String Welcome() {
 		
-		return "Welcome From OneHealth Team (OneHealth-DoctorFeesService)!!!";
+		return "Welcome From OneHealth Team (OneHealth-DoctorScheduleService)!!!";
 	}
 
 }

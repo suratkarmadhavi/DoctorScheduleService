@@ -24,16 +24,16 @@ public interface DoctorScheduleService {
     String saveDoctorSchedule(DoctorSchedule schedule) throws DatabaseException, InstanceAlreadyExistsException;
 
     // Method to retrieve DoctorSchedule by its ID and handle ScheduleNotFoundException if the schedule for the given doctorId is not found.
-    DoctorSchedule getDoctorScheduleById(Long doctorId) throws ScheduleNotFoundException;
+    DoctorSchedule getDoctorScheduleById(Long slotId) throws ScheduleNotFoundException;
 
     // Method to retrieve a list of all DoctorSchedule objects from the database and handle DatabaseException if any occurs.
     List<DoctorSchedule> getAllDoctorsList() throws DatabaseException;
 
     // Method to update DoctorSchedule by its ID and handle ScheduleNotFoundException if the schedule for the given doctorId is not found.
-    DoctorSchedule updateScheduleByID(long doctorId, DoctorSchedule doctorSchedule) throws ScheduleNotFoundException;
+    DoctorSchedule updateScheduleByID(long slotId, DoctorSchedule doctorSchedule) throws ScheduleNotFoundException;
 
     // Method to delete DoctorSchedule by its ID and handle ScheduleNotFoundException if the schedule for the given doctorId is not found.
-    DoctorSchedule deleteScheduleByID(long doctorId) throws ScheduleNotFoundException;
+    DoctorSchedule deleteScheduleByID(long slotId) throws ScheduleNotFoundException;
     
     List<DoctorSchedule> findByDoctorId(long doctorId);
     

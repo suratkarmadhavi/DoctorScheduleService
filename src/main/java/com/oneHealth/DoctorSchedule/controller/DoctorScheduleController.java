@@ -72,18 +72,18 @@ public class DoctorScheduleController {
     }
 
     // Endpoint to update the doctor's schedule information by doctorId in the database.
-    @PutMapping("/updateDoctorSchedule/{doctorId}")
-    public ResponseEntity<String> updateDoctorSchedule(@PathVariable(value = "doctorId") long doctorId, @RequestBody DoctorSchedule doctorSchedule) throws ScheduleNotFoundException {
-        service.updateScheduleByID(doctorId, doctorSchedule);
+    @PutMapping("/updateDoctorSchedule/{slotId}")
+    public ResponseEntity<String> updateDoctorSchedule(@PathVariable(value = "slotId") long slotId, @RequestBody DoctorSchedule doctorSchedule) throws ScheduleNotFoundException {
+        service.updateScheduleByID(slotId, doctorSchedule);
         logger.info("In Controller - Doctor Schedule Updated Successfully: " + doctorSchedule);
         return new ResponseEntity<>("Doctor Schedule updated successfully", HttpStatus.CREATED);
     }
 
     // Endpoint to delete the doctor's schedule information by doctorId from the database.
-    @DeleteMapping("/deleteDoctorSchedule/{doctorId}")
-    public ResponseEntity<String> deleteScheduleByID(@PathVariable(value = "doctorId") long doctorId) throws ScheduleNotFoundException {
-        service.deleteScheduleByID(doctorId);
-        logger.info("In Controller - Doctor Schedule Deleted Successfully with ID: " + doctorId);
+    @DeleteMapping("/deleteDoctorSchedule/{slotId}")
+    public ResponseEntity<String> deleteScheduleByID(@PathVariable(value = "slotId") long slotId) throws ScheduleNotFoundException {
+        service.deleteScheduleByID(slotId);
+        logger.info("In Controller - Doctor Schedule Deleted Successfully with ID: " + slotId);
         return new ResponseEntity<>("Doctor Schedule deleted Successfully", HttpStatus.OK);
     }
     
