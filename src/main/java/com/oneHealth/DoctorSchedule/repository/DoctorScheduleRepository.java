@@ -21,4 +21,5 @@ public interface DoctorScheduleRepository extends JpaRepository<DoctorSchedule, 
 	List<DoctorSchedule> findByDoctorId(long doctorId);
 	List<DoctorSchedule> findByDoctorIdAndDate(Long doctorId, Date date);
 	List<DoctorSchedule> findByDoctorIdAndDateAfterOrderByDateAscStartTimeAsc(Long doctorId, Date date);
+	List<DoctorSchedule> findByDoctorIdAndDateAndShift(Long doctorId, Date date, String shift);
 }

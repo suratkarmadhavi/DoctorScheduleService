@@ -1,7 +1,7 @@
 package com.oneHealth.DoctorSchedule.entity;
 
 import java.sql.Time;
-import java.util.Date;
+import java.sql.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

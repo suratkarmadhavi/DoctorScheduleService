@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.InstanceAlreadyExistsException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +37,16 @@ public class DoctorScheduleServiceImpl implements DoctorScheduleService {
 
     // Method to save a DoctorSchedule object in the database.
     @Override
-    public DoctorSchedule saveDoctorSchedule(DoctorSchedule schedule) throws DatabaseException {
-        logger.info("In Service - Saving Doctor Schedule: " + schedule);
-        DoctorSchedule saveSchedule = repo.save(schedule);
-        return saveSchedule;
+    public String saveDoctorSchedule(DoctorSchedule schedule) throws DatabaseException, InstanceAlreadyExistsException {
+    	List<DoctorSchedule> list = repo.findByDoctorIdAndDateAndShift(schedule.getDoctorId(), schedule.getDate(),schedule.getShift());
+    	if (list.isEmpty()) {
+    		logger.info("In Service - Saving Doctor Schedule: " + schedule);
+            DoctorSchedule saveSchedule = repo.save(schedule);
+            return "Schedule Saved Successfully !!";  
+		} else {
+			throw new InstanceAlreadyExistsException("Schedule Already Exists For Date : "+schedule.getDate() + "And Shift : "+ schedule.getShift());
+		}
+        
     }
 
     // Method to retrieve DoctorSchedule by its ID and handle ScheduleNotFoundException if the schedule for the given doctorId is not found.

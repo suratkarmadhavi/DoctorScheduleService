@@ -3,6 +3,8 @@ package com.oneHealth.DoctorSchedule.service;
 import java.sql.Date;
 import java.util.List;
 
+import javax.management.InstanceAlreadyExistsException;
+
 import com.oneHealth.DoctorSchedule.entity.DoctorSchedule;
 import com.oneHealth.DoctorSchedule.exception.DatabaseException;
 import com.oneHealth.DoctorSchedule.exception.ScheduleNotFoundException;
@@ -19,7 +21,7 @@ import com.oneHealth.DoctorSchedule.exception.ScheduleNotFoundException;
 public interface DoctorScheduleService {
 
     // Method to save a DoctorSchedule object in the database and handle DatabaseException if any occurs.
-    DoctorSchedule saveDoctorSchedule(DoctorSchedule schedule) throws DatabaseException;
+    String saveDoctorSchedule(DoctorSchedule schedule) throws DatabaseException, InstanceAlreadyExistsException;
 
     // Method to retrieve DoctorSchedule by its ID and handle ScheduleNotFoundException if the schedule for the given doctorId is not found.
     DoctorSchedule getDoctorScheduleById(Long doctorId) throws ScheduleNotFoundException;
@@ -38,5 +40,6 @@ public interface DoctorScheduleService {
     List<DoctorSchedule> getTodaysScheduleForDoctor(Long doctorId);
     
     List<DoctorSchedule> getUpcomingSchedules(Long doctorId);
+    
 
 }

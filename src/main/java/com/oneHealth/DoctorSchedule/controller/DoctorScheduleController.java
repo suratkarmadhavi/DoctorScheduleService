@@ -3,6 +3,8 @@ package com.oneHealth.DoctorSchedule.controller;
 import java.sql.Date;
 import java.util.List;
 
+import javax.management.InstanceAlreadyExistsException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,10 +43,10 @@ public class DoctorScheduleController {
 
     // Endpoint to save the doctor's schedule information into the database.
     @PostMapping("/saveSchedule")
-    public ResponseEntity<String> saveDoctorSchedule(@RequestBody DoctorSchedule schedule) throws DatabaseException {
-        service.saveDoctorSchedule(schedule);
+    public ResponseEntity<String> saveDoctorSchedule(@RequestBody DoctorSchedule schedule) throws DatabaseException, InstanceAlreadyExistsException {
+        String s = service.saveDoctorSchedule(schedule);
         logger.info("In Controller - Doctor Schedule Saved Successfully: " + schedule);
-        return new ResponseEntity<>("Doctor Schedule Saved Successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>(s, HttpStatus.CREATED);
     }
 
     // Endpoint to retrieve the doctor's schedule information by doctorId from the database.
