@@ -42,6 +42,13 @@ public class DoctorScheduleController {
     private DoctorScheduleService service;
 
     // Endpoint to save the doctor's schedule information into the database.
+    /**
+     * Saves a doctor schedule by accepting a JSON representation of the schedule.
+     *
+     * @param schedule The JSON representation of the doctor schedule to be saved.
+     * @return ResponseEntity<String> A ResponseEntity containing a message indicating the result of the save operation.
+     * @throws DatabaseException If there is an issue with the database during the save operation.
+     */
     @PostMapping("/saveSchedule")
     public ResponseEntity<String> saveDoctorSchedule(@RequestBody DoctorSchedule schedule) throws DatabaseException {
         String s;
@@ -55,7 +62,17 @@ public class DoctorScheduleController {
         
     }
 
+    
+    
+    
     // Endpoint to retrieve the doctor's schedule information by doctorId from the database.
+    /**
+     * Retrieves a doctor schedule by its ID.
+     *
+     * @param slotId The ID of the doctor schedule to be retrieved.
+     * @return ResponseEntity<DoctorSchedule> A ResponseEntity containing the retrieved doctor schedule.
+     * @throws ScheduleNotFoundException If no doctor schedule is found with the given ID.
+     */
     @GetMapping("/getDoctorScheduleByID/{slotId}")
     public ResponseEntity<DoctorSchedule> getDoctorSchduleByID(@PathVariable(value = "slotId") Long slotId) throws ScheduleNotFoundException {
         DoctorSchedule obj = service.getDoctorScheduleById(slotId);
@@ -63,7 +80,16 @@ public class DoctorScheduleController {
         return ResponseEntity.ok().body(obj);
     }
 
+    
+    
+    
     // Endpoint to retrieve the list of all doctors' schedules from the database.
+    /**
+     * Retrieves a list of all doctor schedules.
+     *
+     * @return ResponseEntity<List<DoctorSchedule>> A ResponseEntity containing the list of all doctor schedules.
+     * @throws DatabaseException If there is an issue with the database during the retrieval.
+     */
     @GetMapping("/getAllDoctors")
     public ResponseEntity<List<DoctorSchedule>> getAllDoctorSchedule() throws DatabaseException {
         List<DoctorSchedule> doctorScheduleList = service.getAllDoctorsList();
@@ -71,7 +97,18 @@ public class DoctorScheduleController {
         return new ResponseEntity<>(doctorScheduleList, HttpStatus.OK);
     }
 
+    
+    
+    
     // Endpoint to update the doctor's schedule information by doctorId in the database.
+    /**
+     * Updates a doctor schedule by its ID with the provided updated schedule data.
+     *
+     * @param slotId          The ID of the doctor schedule to be updated.
+     * @param doctorSchedule  The updated doctor schedule data.
+     * @return ResponseEntity<String> A ResponseEntity containing a message indicating the result of the update operation.
+     * @throws ScheduleNotFoundException If no doctor schedule is found with the given ID.
+     */
     @PutMapping("/updateDoctorSchedule/{slotId}")
     public ResponseEntity<String> updateDoctorSchedule(@PathVariable(value = "slotId") long slotId, @RequestBody DoctorSchedule doctorSchedule) throws ScheduleNotFoundException {
         service.updateScheduleByID(slotId, doctorSchedule);
@@ -79,7 +116,19 @@ public class DoctorScheduleController {
         return new ResponseEntity<>("Doctor Schedule updated successfully", HttpStatus.CREATED);
     }
 
+    
+    
+    
+    
+    
     // Endpoint to delete the doctor's schedule information by doctorId from the database.
+    /**
+     * Deletes a doctor schedule by its ID.
+     *
+     * @param slotId The ID of the doctor schedule to be deleted.
+     * @return ResponseEntity<String> A ResponseEntity containing a message indicating the result of the delete operation.
+     * @throws ScheduleNotFoundException If no doctor schedule is found with the given ID.
+     */
     @DeleteMapping("/deleteDoctorSchedule/{slotId}")
     public ResponseEntity<String> deleteScheduleByID(@PathVariable(value = "slotId") long slotId) throws ScheduleNotFoundException {
         service.deleteScheduleByID(slotId);
@@ -87,6 +136,16 @@ public class DoctorScheduleController {
         return new ResponseEntity<>("Doctor Schedule deleted Successfully", HttpStatus.OK);
     }
     
+    
+    
+    
+    
+    /**
+     * Retrieves a list of doctor schedules for a specific doctor by their ID.
+     *
+     * @param doctorId The ID of the doctor for whom doctor schedules are retrieved.
+     * @return ResponseEntity<List<DoctorSchedule>> A ResponseEntity containing the list of doctor schedules for the specified doctor.
+     */
     @GetMapping("/getDoctorScheduleByDoctorID/{doctorId}")
     public ResponseEntity<List<DoctorSchedule>> getDoctorSchduleByDoctorID(@PathVariable(value = "doctorId") Long doctorId){
         List<DoctorSchedule> obj = service.findByDoctorId(doctorId);
@@ -95,6 +154,15 @@ public class DoctorScheduleController {
     }
     
     
+    
+    
+    
+    /**
+     * Retrieves today's doctor schedule and upcoming schedules for a specific doctor by their ID.
+     *
+     * @param doctorId The ID of the doctor for whom schedules are retrieved.
+     * @return List<DoctorSchedule> A list of today's and upcoming doctor schedules for the specified doctor.
+     */
     @GetMapping("/todayandupcoming/{doctorId}")
     public List<DoctorSchedule> getTodaysSchedule(@PathVariable Long doctorId) {
         
