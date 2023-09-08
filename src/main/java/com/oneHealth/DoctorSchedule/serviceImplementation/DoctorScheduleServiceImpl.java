@@ -154,7 +154,7 @@ public class DoctorScheduleServiceImpl implements DoctorScheduleService {
      * @return List<DoctorSchedule> A list of today's doctor schedules for the specified doctor.
      */
     @Override
-    public List<DoctorSchedule> getTodaysScheduleForDoctor(Long doctorId) {
+    public List<DoctorSchedule> getTodaysAndUpcomingScheduleForDoctor(Long doctorId) throws Exception {
         // Get the current date
         Date today = Date.valueOf(LocalDate.now());
 
@@ -172,6 +172,11 @@ public class DoctorScheduleServiceImpl implements DoctorScheduleService {
         return list3;
     }
 
+    
+    
+    
+    
+    
     /**
      * Retrieves a list of upcoming doctor schedules for a specific doctor by their ID.
      *
@@ -179,7 +184,7 @@ public class DoctorScheduleServiceImpl implements DoctorScheduleService {
      * @return List<DoctorSchedule> A list of upcoming doctor schedules for the specified doctor.
      */
     @Override
-    public List<DoctorSchedule> getUpcomingSchedules(Long doctorId) {
+    public List<DoctorSchedule> getUpcomingSchedules(Long doctorId) throws Exception {
         // Get the current date
         Date currentDate = Date.valueOf(LocalDate.now());
         

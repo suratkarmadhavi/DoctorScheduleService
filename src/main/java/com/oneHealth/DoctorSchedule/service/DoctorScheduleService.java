@@ -39,10 +39,10 @@ public interface DoctorScheduleService {
     List<DoctorSchedule> findByDoctorId(long doctorId);
     
     //Method to find today's schedule of a Doctor based on Doctor ID
-    List<DoctorSchedule> getTodaysScheduleForDoctor(Long doctorId);
+    List<DoctorSchedule> getTodaysAndUpcomingScheduleForDoctor(Long doctorId) throws Exception;
     
     //Method to find upcoming schedule of a doctor by  Doctor ID 
-    List<DoctorSchedule> getUpcomingSchedules(Long doctorId);
+    List<DoctorSchedule> getUpcomingSchedules(Long doctorId) throws Exception;
     
 
 }
