@@ -74,10 +74,20 @@ public class DoctorScheduleController {
      * @throws ScheduleNotFoundException If no doctor schedule is found with the given ID.
      */
     @GetMapping("/getDoctorScheduleByID/{slotId}")
-    public ResponseEntity<DoctorSchedule> getDoctorSchduleByID(@PathVariable(value = "slotId") Long slotId) throws ScheduleNotFoundException {
-        DoctorSchedule obj = service.getDoctorScheduleById(slotId);
-        logger.info("In Controller - Doctor Schedule Retrieved: " + obj);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<DoctorSchedule> getDoctorSchduleByID(@PathVariable(value = "slotId") Long slotId) {
+        try {
+            DoctorSchedule obj = service.getDoctorScheduleById(slotId);
+            logger.info("In Controller - Doctor Schedule Retrieved: " + obj);
+            return ResponseEntity.ok().body(obj);
+        } catch (ScheduleNotFoundException ex) {
+            // Handle ScheduleNotFoundException here
+            logger.error("Schedule not found: " + ex.getMessage());
+            return ResponseEntity.notFound().build();
+        } catch (Exception ex) {
+            // Handle other exceptions here
+            logger.error("An error occurred: " + ex.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     
@@ -91,11 +101,22 @@ public class DoctorScheduleController {
      * @throws DatabaseException If there is an issue with the database during the retrieval.
      */
     @GetMapping("/getAllDoctors")
-    public ResponseEntity<List<DoctorSchedule>> getAllDoctorSchedule() throws DatabaseException {
-        List<DoctorSchedule> doctorScheduleList = service.getAllDoctorsList();
-        logger.info("In Controller - All Doctor Schedules Retrieved: " + doctorScheduleList);
-        return new ResponseEntity<>(doctorScheduleList, HttpStatus.OK);
+    public ResponseEntity<List<DoctorSchedule>> getAllDoctorSchedule() {
+        try {
+            List<DoctorSchedule> doctorScheduleList = service.getAllDoctorsList();
+            logger.info("In Controller - All Doctor Schedules Retrieved: " + doctorScheduleList);
+            return new ResponseEntity<>(doctorScheduleList, HttpStatus.OK);
+        } catch (DatabaseException ex) {
+            // Handle DatabaseException here
+            logger.error("Database error: " + ex.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } catch (Exception ex) {
+            // Handle other exceptions here
+            logger.error("An error occurred: " + ex.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
+
 
     
     
@@ -110,11 +131,22 @@ public class DoctorScheduleController {
      * @throws ScheduleNotFoundException If no doctor schedule is found with the given ID.
      */
     @PutMapping("/updateDoctorSchedule/{slotId}")
-    public ResponseEntity<String> updateDoctorSchedule(@PathVariable(value = "slotId") long slotId, @RequestBody DoctorSchedule doctorSchedule) throws ScheduleNotFoundException {
-        service.updateScheduleByID(slotId, doctorSchedule);
-        logger.info("In Controller - Doctor Schedule Updated Successfully: " + doctorSchedule);
-        return new ResponseEntity<>("Doctor Schedule updated successfully", HttpStatus.CREATED);
+    public ResponseEntity<String> updateDoctorSchedule(@PathVariable(value = "slotId") long slotId, @RequestBody DoctorSchedule doctorSchedule) {
+        try {
+            service.updateScheduleByID(slotId, doctorSchedule);
+            logger.info("In Controller - Doctor Schedule Updated Successfully: " + doctorSchedule);
+            return new ResponseEntity<>("Doctor Schedule updated successfully", HttpStatus.CREATED);
+        } catch (ScheduleNotFoundException ex) {
+            // Handle ScheduleNotFoundException here
+            logger.error("Schedule not found: " + ex.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Schedule not found");
+        } catch (Exception ex) {
+            // Handle other exceptions here
+            logger.error("An error occurred: " + ex.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+        }
     }
+
 
     
     
@@ -130,11 +162,22 @@ public class DoctorScheduleController {
      * @throws ScheduleNotFoundException If no doctor schedule is found with the given ID.
      */
     @DeleteMapping("/deleteDoctorSchedule/{slotId}")
-    public ResponseEntity<String> deleteScheduleByID(@PathVariable(value = "slotId") long slotId) throws ScheduleNotFoundException {
-        service.deleteScheduleByID(slotId);
-        logger.info("In Controller - Doctor Schedule Deleted Successfully with ID: " + slotId);
-        return new ResponseEntity<>("Doctor Schedule deleted Successfully", HttpStatus.OK);
+    public ResponseEntity<String> deleteScheduleByID(@PathVariable(value = "slotId") long slotId) {
+        try {
+            service.deleteScheduleByID(slotId);
+            logger.info("In Controller - Doctor Schedule Deleted Successfully with ID: " + slotId);
+            return new ResponseEntity<>("Doctor Schedule deleted successfully", HttpStatus.OK);
+        } catch (ScheduleNotFoundException ex) {
+            // Handle ScheduleNotFoundException here
+            logger.error("Schedule not found: " + ex.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Schedule not found");
+        } catch (Exception ex) {
+            // Handle other exceptions here
+            logger.error("An error occurred: " + ex.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+        }
     }
+
     
     
     
@@ -147,11 +190,18 @@ public class DoctorScheduleController {
      * @return ResponseEntity<List<DoctorSchedule>> A ResponseEntity containing the list of doctor schedules for the specified doctor.
      */
     @GetMapping("/getDoctorScheduleByDoctorID/{doctorId}")
-    public ResponseEntity<List<DoctorSchedule>> getDoctorSchduleByDoctorID(@PathVariable(value = "doctorId") Long doctorId){
-        List<DoctorSchedule> obj = service.findByDoctorId(doctorId);
-        logger.info("In Controller - Doctor Schedule Retrieved: " + obj);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<List<DoctorSchedule>> getDoctorSchduleByDoctorID(@PathVariable(value = "doctorId") Long doctorId) {
+        try {
+            List<DoctorSchedule> obj = service.findByDoctorId(doctorId);
+            logger.info("In Controller - Doctor Schedule Retrieved: " + obj);
+            return ResponseEntity.ok().body(obj);
+        } catch (Exception ex) {
+            // Handle exceptions here
+            logger.error("An error occurred: " + ex.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
+
     
     
     
@@ -164,9 +214,15 @@ public class DoctorScheduleController {
      * @return List<DoctorSchedule> A list of today's and upcoming doctor schedules for the specified doctor.
      */
     @GetMapping("/todayandupcoming/{doctorId}")
-    public List<DoctorSchedule> getTodaysSchedule(@PathVariable Long doctorId) {
-        
-        // Call the service method to retrieve today's schedule for the doctor
-        return service.getTodaysScheduleForDoctor(doctorId);
+    public ResponseEntity<List<DoctorSchedule>> getTodaysSchedule(@PathVariable Long doctorId) {
+        try {
+            List<DoctorSchedule> schedules = service.getTodaysScheduleForDoctor(doctorId);
+            return ResponseEntity.ok(schedules);
+        } catch (Exception ex) {
+            // Handle exceptions here
+            logger.error("An error occurred: " + ex.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
+
 }
