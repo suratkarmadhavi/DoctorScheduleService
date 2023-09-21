@@ -33,7 +33,7 @@ public interface DoctorScheduleService {
     DoctorSchedule updateScheduleByID(long slotId, DoctorSchedule doctorSchedule) throws ScheduleNotFoundException;
 
     // Method to delete DoctorSchedule by its ID and handle ScheduleNotFoundException if the schedule for the given doctorId is not found.
-    DoctorSchedule deleteScheduleByID(long slotId) throws ScheduleNotFoundException;
+    DoctorSchedule deleteScheduleByID(long slotId) throws ScheduleNotFoundException; 
     
     //Method to find a Doctor Schedule by Doctor ID
     List<DoctorSchedule> findByDoctorId(long doctorId);

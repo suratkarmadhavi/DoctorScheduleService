@@ -36,7 +36,7 @@ public class DoctorSchedule {
     // End time for the schedule
     private Time endTime;
 
-    // Type of availability (e.g., available, unavailable, busy, etc.)
+    // Type of availability (e.g., online , offline etc.)
     private String typeAvailability;
 
     // Address for the availability (optional, can be used to specify the location)
@@ -83,7 +83,7 @@ public class DoctorSchedule {
     }
 
     // Getter method for date
-    public Date getDate() {
+    public Date getDate() { 
         return date;
     }
 
